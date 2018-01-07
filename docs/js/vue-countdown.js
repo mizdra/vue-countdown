@@ -2,10 +2,10 @@
  * vue-countdown v0.5.0
  * https://github.com/xkeshi/vue-countdown
  *
- * Copyright (c) 2017 Xkeshi
+ * Copyright (c) 2018 Xkeshi
  * Released under the MIT license
  *
- * Date: 2017-12-31T05:05:05.229Z
+ * Date: 2018-01-07T10:11:53.344Z
  */
 
 (function (global, factory) {
@@ -207,29 +207,19 @@ var index = {
       totalDays: this.totalDays,
       totalHours: this.totalHours,
       totalMinutes: this.totalMinutes,
-      totalSeconds: this.totalSeconds
+      totalSeconds: this.totalSeconds,
+      count: this.count
     })] : this.$slots.default);
   },
   created: function created() {
     this.init();
   },
   mounted: function mounted() {
-    var _this2 = this;
-
     if (this.autoStart) {
       this.start();
     }
-
-    window.addEventListener('focus', this.onFocus = function () {
-      _this2.focusing = true;
-    });
-    window.addEventListener('blur', this.onBlur = function () {
-      _this2.focusing = false;
-    });
   },
   beforeDestroy: function beforeDestroy() {
-    window.removeEventListener('focus', this.onFocus);
-    window.removeEventListener('blur', this.onBlur);
     clearTimeout(this.timeout);
   },
 
@@ -247,7 +237,6 @@ var index = {
     init: function init() {
       var time = this.time;
 
-      this.focusing = true;
 
       if (time > 0) {
         this.count = time;
@@ -285,7 +274,7 @@ var index = {
      * @emits Countdown#countdownprogress
      */
     step: function step() {
-      var _this3 = this;
+      var _this2 = this;
 
       if (!this.counting) {
         return;
@@ -300,7 +289,8 @@ var index = {
           days: this.days,
           hours: this.hours,
           minutes: this.minutes,
-          seconds: this.seconds
+          seconds: this.seconds,
+          count: this.count
         });
       }
 
@@ -309,8 +299,8 @@ var index = {
 
 
         this.timeout = setTimeout(function () {
-          _this3.update();
-          _this3.step();
+          _this2.update();
+          _this2.step();
         }, interval);
       } else {
         this.count = 0;
@@ -347,11 +337,7 @@ var index = {
         return;
       }
 
-      if (this.focusing) {
-        this.count = Math.max(0, this.endTime - this.now());
-      } else {
-        this.count -= this.interval;
-      }
+      this.count = Math.max(0, this.endTime - this.now());
     }
   }
 };
