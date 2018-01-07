@@ -176,6 +176,7 @@ export default {
         totalHours: this.totalHours,
         totalMinutes: this.totalMinutes,
         totalSeconds: this.totalSeconds,
+        count: this.count,
       }),
     ] : this.$slots.default);
   },
@@ -255,6 +256,7 @@ export default {
           hours: this.hours,
           minutes: this.minutes,
           seconds: this.seconds,
+          count: this.count,
         });
       }
 
