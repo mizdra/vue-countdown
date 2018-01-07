@@ -188,14 +188,9 @@ export default {
     if (this.autoStart) {
       this.start();
     }
-
-    window.addEventListener('focus', (this.onFocus = () => { this.focusing = true; }));
-    window.addEventListener('blur', (this.onBlur = () => { this.focusing = false; }));
   },
 
   beforeDestroy() {
-    window.removeEventListener('focus', this.onFocus);
-    window.removeEventListener('blur', this.onBlur);
     clearTimeout(this.timeout);
   },
 
@@ -211,7 +206,6 @@ export default {
      */
     init() {
       const { time } = this;
-      this.focusing = true;
 
       if (time > 0) {
         this.count = time;
@@ -304,11 +298,7 @@ export default {
         return;
       }
 
-      if (this.focusing) {
-        this.count = Math.max(0, this.endTime - this.now());
-      } else {
-        this.count -= this.interval;
-      }
+      this.count = Math.max(0, this.endTime - this.now());
     },
   },
 };
